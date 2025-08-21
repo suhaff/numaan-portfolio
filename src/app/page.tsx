@@ -59,7 +59,7 @@ const SERVICES = [
 const PRICING = [
   { tier: "Starter", price: "$499+", points: ["Landing page", "1 round of revisions", "Deployed on Vercel"] },
   { tier: "Pro", price: "$1,499+", points: ["Multi-page site", "Contact backend + analytics", "SEO + performance"] },
-  { tier: "Custom", price: "Let’s talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
+  { tier: "Custom", price: "Let&apos;s talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
 ];
 
 const TESTIMONIALS = [
@@ -242,7 +242,6 @@ export default function PortfolioSite() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
             >
-              {/* Drop a featured screenshot here if you want */}
               <div className="absolute inset-0 grid place-items-center">
                 <div className="text-center p-6">
                   <p className="text-sm uppercase tracking-widest text-muted-foreground">Featured</p>
@@ -252,17 +251,6 @@ export default function PortfolioSite() {
               </div>
             </motion.div>
           </motion.div>
-
-          {/* Tech marquee */}
-          <div className="overflow-hidden border-y border-border/60">
-            <div className="flex gap-10 py-4 animate-[marquee_22s_linear_infinite] whitespace-nowrap text-muted-foreground">
-              {["React", "Next.js", "TypeScript", "Python", "PyTorch", "Unity", "Node.js", "PostgreSQL", "MongoDB", "Tailwind", "GCP"].map((t) => (
-                <span key={t} className="inline-flex items-center gap-2 text-sm">
-                  <Shield className="h-4 w-4" /> {t}
-                </span>
-              ))}
-            </div>
-          </div>
         </section>
 
         {/* Projects */}
@@ -320,161 +308,6 @@ export default function PortfolioSite() {
                 <a href="#contact">Need something like this built?</a>
               </Button>
             </div>
-          </motion.div>
-        </section>
-
-        {/* Services */}
-        <section id="services" className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Services</h2>
-            <p className="text-muted-foreground mt-2">Ways I can help your team move faster.</p>
-
-            <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {SERVICES.map(({ title, blurb, icon: Icon }) => (
-                <Card key={title} className="hover:shadow-lg transition-shadow">
-                  <CardContent className="p-5">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 rounded-xl bg-muted border">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <span className="font-medium">{title}</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{blurb}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Pricing */}
-        <section id="pricing" className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Pricing</h2>
-            <p className="text-muted-foreground mt-2">Transparent starting points—custom quotes on request.</p>
-
-            <div className="mt-8 grid md:grid-cols-3 gap-6">
-              {PRICING.map((tier) => (
-                <Card key={tier.tier} className="relative overflow-hidden">
-                  <CardContent className="p-6">
-                    <div className="flex items-baseline justify-between">
-                      <h3 className="text-xl font-semibold">{tier.tier}</h3>
-                      <span className="text-2xl font-bold">{tier.price}</span>
-                    </div>
-                    <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                      {tier.points.map((pt) => (
-                        <li key={pt} className="flex items-center gap-2">
-                          <Check className="h-4 w-4" /> {pt}
-                        </li>
-                      ))}
-                    </ul>
-                    <Button asChild className="mt-6 w-full">
-                      <a href={HIRE_LINK} target="_blank" rel="noreferrer">
-                        Start with {tier.tier}
-                      </a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        {/* About */}
-        <section id="about" className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">About</h2>
-
-            <div className="mt-4 grid md:grid-cols-3 gap-6">
-              <Card className="md:col-span-2">
-                <CardContent className="p-6 leading-relaxed text-muted-foreground">
-                  <p>
-                    I’m a developer focused on crafting polished user experiences and reliable systems. I care about performance,
-                    maintainability, and thoughtful design.
-                  </p>
-                  <p className="mt-3">
-                    Recently, I’ve been exploring server actions, edge runtimes, and ways to make AI features feel intuitive
-                    rather than intrusive.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Details</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground space-y-2">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" /> {PROFILE.location}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" /> {PROFILE.email}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" /> {PROFILE.phone}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Testimonials */}
-        <section className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">What people say</h2>
-
-            <div className="mt-8 grid md:grid-cols-2 gap-6">
-              {TESTIMONIALS.map((t, i) => (
-                <Card key={i} className="relative overflow-hidden">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-2 text-yellow-500 mb-2">
-                      {Array.from({ length: 5 }).map((_, idx) => (
-                        <Star key={idx} className="h-4 w-4 fill-current" />
-                      ))}
-                    </div>
-                    <p className="text-muted-foreground">“{t.quote}”</p>
-                    <div className="mt-4 text-sm">
-                      — <span className="font-medium">{t.name}</span>, {t.role}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Contact */}
-        <section id="contact" className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Contact</h2>
-            <p className="text-muted-foreground mt-2">Have a project in mind? Let’s talk.</p>
-
-            <form
-              className="mt-6 grid md:grid-cols-2 gap-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const data = new FormData(e.currentTarget);
-                const body = `Name: ${data.get("name")}\nEmail: ${data.get("email")}\nBudget: ${data.get("budget")}\nTimeline: ${data.get("timeline")}\nMessage: ${data.get("message")}`;
-                window.location.href = `mailto:${PROFILE.email}?subject=Project%20Inquiry&body=${encodeURIComponent(body)}`;
-              }}
-            >
-              <Input name="name" placeholder="Your name" required />
-              <Input name="email" type="email" placeholder="Your email" required />
-              <Input name="budget" placeholder="Budget (e.g. $1,500)" />
-              <Input name="timeline" placeholder="Timeline (e.g. 2–4 weeks)" />
-              <div className="md:col-span-2">
-                <Textarea name="message" placeholder="Tell me a bit about your project..." rows={5} required />
-              </div>
-              <div className="flex items-center gap-3">
-                <Button type="submit" className="mt-2">Send</Button>
-                <Button variant="secondary" asChild className="mt-2">
-                  <a href={HIRE_LINK} target="_blank" rel="noreferrer">
-                    <Calendar className="h-4 w-4 mr-2" /> Book a call
-                  </a>
-                </Button>
-              </div>
-            </form>
           </motion.div>
         </section>
 
