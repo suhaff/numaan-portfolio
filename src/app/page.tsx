@@ -74,8 +74,7 @@ const PROJECTS = [
     description:
       "Research framework for industrial anomaly detection using ViT backbone with Deep Nearest Embedding, accuracy matrix logging, and task-incremental learning.",
     tags: ["PyTorch", "Vision Transformers", "Continual Learning", "MVTec"],
-    image:
-      "https://images.unsplash.com/photo-1555949963-aa79dcee981d?q=80&w=1200&auto=format&fit=crop",
+    image: "", // Removed image
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
@@ -84,8 +83,7 @@ const PROJECTS = [
     description:
       "Unity/C# game inspired by Mini Militia with shooting mechanics, tactical movement, and multiplayer systems.",
     tags: ["Unity", "C#", "Multiplayer", "Game Dev"],
-    image:
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop",
+    image: "", // Removed image
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
@@ -94,8 +92,7 @@ const PROJECTS = [
     description:
       "Cross-platform assistant integrating calendar, tasks, and email with ML for scheduling and prioritization (React/Flutter, cloud microservices).",
     tags: ["React", "Flutter", "NLP", "Microservices"],
-    image:
-      "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop",
+    image: "", // Removed image
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
@@ -104,8 +101,7 @@ const PROJECTS = [
     description:
       "API for live sentiment analysis on Reddit with fallbacks to IMDb/Amazon reviews.",
     tags: ["APIs", "NLP", "Realtime"],
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+    image: "", // Removed image
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
@@ -114,8 +110,7 @@ const PROJECTS = [
     description:
       "Matching resumes to jobs using AI; React/Next.js frontend with Node/Django backend.",
     tags: ["Next.js", "Django", "AI"],
-    image:
-      "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop",
+    image: "", // Removed image
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
@@ -124,8 +119,7 @@ const PROJECTS = [
     description:
       "Slack/Discord-style app with live chat, file sharing, and teams.",
     tags: ["Socket.io", "Node.js", "React"],
-    image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop",
+    image: "", // Removed image
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
@@ -336,164 +330,3 @@ export default function PortfolioSite() {
             </div>
           </motion.div>
         </section>
-
-        {/* Pricing */}
-        <section id="pricing" className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Pricing</h2>
-            <p className="text-muted-foreground mt-2">Transparent starting points—custom quotes on request.</p>
-
-            <div className="mt-8 grid md:grid-cols-3 gap-6">
-              {PRICING.map((tier) => (
-                <Card key={tier.tier} className="relative overflow-hidden">
-                  <CardContent className="p-6">
-                    <div className="flex items-baseline justify-between">
-                      <h3 className="text-xl font-semibold">{tier.tier}</h3>
-                      <span className="text-2xl font-bold">{tier.price}</span>
-                    </div>
-                    <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                      {tier.points.map((pt) => (
-                        <li key={pt} className="flex items-center gap-2">
-                          <Check className="h-4 w-4" /> {pt}
-                        </li>
-                      ))}
-                    </ul>
-                    <Button asChild className="mt-6 w-full">
-                      <a href={HIRE_LINK} target="_blank" rel="noreferrer">
-                        Start with {tier.tier}
-                      </a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        {/* About */}
-        <section id="about" className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">About</h2>
-
-            <div className="mt-4 grid md:grid-cols-3 gap-6">
-              <Card className="md:col-span-2">
-                <CardContent className="p-6 leading-relaxed text-muted-foreground">
-                  <p>
-                    I am a developer focused on crafting polished user experiences and reliable systems. I care about performance,
-                    maintainability, and thoughtful design.
-                  </p>
-                  <p className="mt-3">
-                    Recently, I have been exploring server actions, edge runtimes, and ways to make AI features feel intuitive
-                    rather than intrusive.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Details</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground space-y-2">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" /> {PROFILE.location}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" /> {PROFILE.email}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" /> {PROFILE.phone}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Testimonials */}
-        <section className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">What people say</h2>
-
-            <div className="mt-8 grid md:grid-cols-2 gap-6">
-              {TESTIMONIALS.map((t, i) => (
-                <Card key={i} className="relative overflow-hidden">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-2 text-yellow-500 mb-2">
-                      {Array.from({ length: 5 }).map((_, idx) => (
-                        <Star key={idx} className="h-4 w-4 fill-current" />
-                      ))}
-                    </div>
-                    <p className="text-muted-foreground">“{t.quote}”</p>
-                    <div className="mt-4 text-sm">
-                      — <span className="font-medium">{t.name}</span>, {t.role}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Contact */}
-        <section id="contact" className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Contact</h2>
-            <p className="text-muted-foreground mt-2">Have a project in mind? Let us talk.</p>
-
-            <form
-              className="mt-6 grid md:grid-cols-2 gap-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const data = new FormData(e.currentTarget);
-                const body = `Name: ${data.get("name")}\nEmail: ${data.get("email")}\nBudget: ${data.get("budget")}\nTimeline: ${data.get("timeline")}\nMessage: ${data.get("message")}`;
-                window.location.href = `mailto:${PROFILE.email}?subject=Project%20Inquiry&body=${encodeURIComponent(body)}`;
-              }}
-            >
-              <Input name="name" placeholder="Your name" required />
-              <Input name="email" type="email" placeholder="Your email" required />
-              <Input name="budget" placeholder="Budget (e.g. $1,500)" />
-              <Input name="timeline" placeholder="Timeline (e.g. 2 to 4 weeks)" />
-              <div className="md:col-span-2">
-                <Textarea name="message" placeholder="Tell me a bit about your project..." rows={5} required />
-              </div>
-              <div className="flex items-center gap-3">
-                <Button type="submit" className="mt-2">Send</Button>
-                <Button variant="secondary" asChild className="mt-2">
-                  <a href={HIRE_LINK} target="_blank" rel="noreferrer">
-                    <Calendar className="h-4 w-4 mr-2" /> Book a call
-                  </a>
-                </Button>
-              </div>
-            </form>
-          </motion.div>
-        </section>
-
-        {/* Footer */}
-        <footer className="border-t border-border/60">
-          <div className="container mx-auto px-4 py-10 text-sm text-muted-foreground flex flex-col md:flex-row items-center justify-between gap-3">
-            <p>© {new Date().getFullYear()} {PROFILE.name}. All rights reserved.</p>
-            <div className="flex items-center gap-4">
-              <a className="hover:text-foreground" href={PROFILE.links.github} target="_blank" rel="noreferrer" aria-label="GitHub">
-                <Github className="h-4 w-4" />
-              </a>
-              <a className="hover:text-foreground" href={PROFILE.links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                <Linkedin className="h-4 w-4" />
-              </a>
-              <a className="hover:text-foreground" href={`mailto:${PROFILE.email}`} aria-label="Email">
-                <Mail className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-        </footer>
-
-        {/* Keyframes for marquee */}
-        <style jsx global>{`
-          @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-        `}</style>
-      </div>
-    </div>
-  );
-}
