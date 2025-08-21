@@ -59,7 +59,7 @@ const SERVICES = [
 const PRICING = [
   { tier: "Starter", price: "$499+", points: ["Landing page", "1 round of revisions", "Deployed on Vercel"] },
   { tier: "Pro", price: "$1,499+", points: ["Multi-page site", "Contact backend + analytics", "SEO + performance"] },
-  { tier: "Custom", price: "Lets talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
+  { tier: "Custom", price: "Let&apos;s talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
 ];
 
 const TESTIMONIALS = [
@@ -242,7 +242,6 @@ export default function PortfolioSite() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
             >
-              {/* Drop a featured screenshot here if you want */}
               <div className="absolute inset-0 grid place-items-center">
                 <div className="text-center p-6">
                   <p className="text-sm uppercase tracking-widest text-muted-foreground">Featured</p>
@@ -448,7 +447,7 @@ export default function PortfolioSite() {
         <section id="contact" className="container mx-auto px-4 py-16">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Contact</h2>
-            <p className="text-muted-foreground mt-2">Have a project in mind? Lets talk.</p>
+            <p className="text-muted-foreground mt-2">Have a project in mind? Let&apos;s talk.</p>
 
             <form
               className="mt-6 grid md:grid-cols-2 gap-4"
