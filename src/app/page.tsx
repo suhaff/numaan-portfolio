@@ -389,11 +389,11 @@ export default function PortfolioSite() {
               <Card className="md:col-span-2">
                 <CardContent className="p-6 leading-relaxed text-muted-foreground">
                   <p>
-                    I’m a developer focused on crafting polished user experiences and reliable systems. I care about performance,
+                    I am a developer focused on crafting polished user experiences and reliable systems. I care about performance,
                     maintainability, and thoughtful design.
                   </p>
                   <p className="mt-3">
-                    Recently, I’ve been exploring server actions, edge runtimes, and ways to make AI features feel intuitive
+                    Recently, I have been exploring server actions, edge runtimes, and ways to make AI features feel intuitive
                     rather than intrusive.
                   </p>
                 </CardContent>
@@ -448,7 +448,7 @@ export default function PortfolioSite() {
         <section id="contact" className="container mx-auto px-4 py-16">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Contact</h2>
-            <p className="text-muted-foreground mt-2">Have a project in mind? Let’s talk.</p>
+            <p className="text-muted-foreground mt-2">Have a project in mind? Lets talk.</p>
 
             <form
               className="mt-6 grid md:grid-cols-2 gap-4"
@@ -462,7 +462,7 @@ export default function PortfolioSite() {
               <Input name="name" placeholder="Your name" required />
               <Input name="email" type="email" placeholder="Your email" required />
               <Input name="budget" placeholder="Budget (e.g. $1,500)" />
-              <Input name="timeline" placeholder="Timeline (e.g. 2–4 weeks)" />
+              <Input name="timeline" placeholder="Timeline (e.g. 2 to 4 weeks)" />
               <div className="md:col-span-2">
                 <Textarea name="message" placeholder="Tell me a bit about your project..." rows={5} required />
               </div>
