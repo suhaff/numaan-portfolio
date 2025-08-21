@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-// Remove the `Image` import temporarily
+// Removed the Image import temporarily
 // import Image from "next/image";
 
 import {
