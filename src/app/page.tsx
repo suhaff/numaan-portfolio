@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+// Remove the `Image` import temporarily
+// import Image from "next/image";
 
 import {
   Github,
@@ -59,7 +60,7 @@ const SERVICES = [
 const PRICING = [
   { tier: "Starter", price: "$499+", points: ["Landing page", "1 round of revisions", "Deployed on Vercel"] },
   { tier: "Pro", price: "$1,499+", points: ["Multi-page site", "Contact backend + analytics", "SEO + performance"] },
-  { tier: "Custom", price: "Let&apos;s talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
+  { tier: "Custom", price: "Let us talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
 ];
 
 const TESTIMONIALS = [
@@ -236,12 +237,8 @@ export default function PortfolioSite() {
               </div>
             </div>
 
-            <motion.div
-              className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 border border-border/70 overflow-hidden shadow-xl"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-            >
+            {/* Removed Image temporarily */}
+            <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 border border-border/70 overflow-hidden shadow-xl">
               <div className="absolute inset-0 grid place-items-center">
                 <div className="text-center p-6">
                   <p className="text-sm uppercase tracking-widest text-muted-foreground">Featured</p>
@@ -249,7 +246,7 @@ export default function PortfolioSite() {
                   <p className="mt-2 text-muted-foreground">Swap this card for your best screenshot or a 3D canvas.</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
 
           {/* Tech marquee */}
@@ -273,14 +270,8 @@ export default function PortfolioSite() {
             <div className="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
               {PROJECTS.slice(0, 6).map((p, i) => (
                 <Card key={i} className="overflow-hidden group hover:shadow-xl transition-shadow">
+                  {/* Temporarily removed image */}
                   <div className="aspect-video relative overflow-hidden">
-                    <Image
-                      src={p.image}
-                      alt={p.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      className="object-cover w-full h-full group-hover:scale-[1.02] transition-transform duration-300"
-                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
                   </div>
 
@@ -447,7 +438,7 @@ export default function PortfolioSite() {
         <section id="contact" className="container mx-auto px-4 py-16">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Contact</h2>
-            <p className="text-muted-foreground mt-2">Have a project in mind? Let&apos;s talk.</p>
+            <p className="text-muted-foreground mt-2">Have a project in mind? Let us talk.</p>
 
             <form
               className="mt-6 grid md:grid-cols-2 gap-4"
