@@ -59,7 +59,7 @@ const SERVICES = [
 const PRICING = [
   { tier: "Starter", price: "$499+", points: ["Landing page", "1 round of revisions", "Deployed on Vercel"] },
   { tier: "Pro", price: "$1,499+", points: ["Multi-page site", "Contact backend + analytics", "SEO + performance"] },
-  { tier: "Custom", price: "Let’s talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
+  { tier: "Custom", price: "Lets talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
 ];
 
 const TESTIMONIALS = [
