@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+
 import {
   Github,
   Linkedin,
@@ -29,7 +31,9 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-/** ===== EDIT ME: your profile ===== */
+/* =========================
+   PROFILE / CONTENT CONFIG
+   ========================= */
 const PROFILE = {
   name: "Numaan Suhaff",
   role: "CS Student • Software & Game Developer",
@@ -41,11 +45,10 @@ const PROFILE = {
   links: {
     github: "https://github.com/suhaff",
     linkedin: "https://www.linkedin.com/in/numaansuhaff",
-    resume: "/Numaan_Suhaff_Resume.docx", // put this file in the /public folder
+    resume: "/Numaan_Suhaff_Resume.docx", // ensure this file exists in /public
   },
 };
 
-/** ===== What you sell (edit copy freely) ===== */
 const SERVICES = [
   { title: "Web App Development", blurb: "React/Next.js, Node, databases, auth, payments.", icon: Rocket },
   { title: "AI Features & Integrations", blurb: "LLMs, NLP, vision, embeddings, model serving.", icon: Cpu },
@@ -53,80 +56,94 @@ const SERVICES = [
   { title: "Automation & APIs", blurb: "Data pipelines, scraping, REST/GraphQL APIs.", icon: Palette },
 ];
 
-/** ===== Simple pricing (change freely) ===== */
 const PRICING = [
   { tier: "Starter", price: "$499+", points: ["Landing page", "1 round of revisions", "Deployed on Vercel"] },
   { tier: "Pro", price: "$1,499+", points: ["Multi-page site", "Contact backend + analytics", "SEO + performance"] },
-  { tier: "Custom", price: "Let's talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
+  { tier: "Custom", price: "Let’s talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
 ];
 
-/** ===== Optional quotes (replace with real ones later) ===== */
 const TESTIMONIALS = [
   { name: "Happy Client", role: "Founder", quote: "Numaan delivered fast and nailed the requirements. The performance and polish were next-level." },
   { name: "Research Lead", role: "AI Lab", quote: "Great at translating research ideas into working code with solid experiments and tracking." },
 ];
 
-/** ===== Projects (replace images/links with your real ones) ===== */
 const PROJECTS = [
   {
     title: "Continual Anomaly Detection (ViT + DNE) on MVTec",
-    description: "Research framework for industrial anomaly detection using ViT backbone with Deep Nearest Embedding, accuracy matrix logging, and task-incremental learning.",
+    description:
+      "Research framework for industrial anomaly detection using ViT backbone with Deep Nearest Embedding, accuracy matrix logging, and task-incremental learning.",
     tags: ["PyTorch", "Vision Transformers", "Continual Learning", "MVTec"],
-    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981d?q=80&w=1200&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1555949963-aa79dcee981d?q=80&w=1200&auto=format&fit=crop",
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
   {
     title: "Arena – 2D Tactical Shooter",
-    description: "Unity/C# game inspired by Mini Militia with shooting mechanics, tactical movement, and multiplayer systems.",
+    description:
+      "Unity/C# game inspired by Mini Militia with shooting mechanics, tactical movement, and multiplayer systems.",
     tags: ["Unity", "C#", "Multiplayer", "Game Dev"],
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop",
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
   {
     title: "AI-Powered Personal Productivity Assistant",
-    description: "Cross-platform assistant integrating calendar, tasks, and email with ML for scheduling and prioritization.",
+    description:
+      "Cross-platform assistant integrating calendar, tasks, and email with ML for scheduling and prioritization (React/Flutter, cloud microservices).",
     tags: ["React", "Flutter", "NLP", "Microservices"],
-    image: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop",
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
   {
     title: "Real-Time Sentiment Analysis API",
-    description: "API for live sentiment analysis on Reddit with fallbacks to IMDb/Amazon reviews.",
+    description:
+      "API for live sentiment analysis on Reddit with fallbacks to IMDb/Amazon reviews.",
     tags: ["APIs", "NLP", "Realtime"],
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
   {
     title: "Job Board with AI Resume Matching",
-    description: "Matching resumes to jobs using AI; React/Next.js frontend with Node/Django backend.",
+    description:
+      "Matching resumes to jobs using AI; React/Next.js frontend with Node/Django backend.",
     tags: ["Next.js", "Django", "AI"],
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop",
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
   {
     title: "Realtime Chat & Collaboration App",
-    description: "Slack/Discord-style app with live chat, file sharing, and teams.",
+    description:
+      "Slack/Discord-style app with live chat, file sharing, and teams.",
     tags: ["Socket.io", "Node.js", "React"],
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop",
     repo: "https://github.com/suhaff",
     demo: "https://suhaffinity.com",
   },
 ];
 
-/** ===== Small animation preset ===== */
+/* ================
+   ANIMATION PRESET
+   ================ */
 const sectionFade = {
   hidden: { opacity: 0, y: 12 },
   show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-export default function Page() {
+/* =========================
+   PAGE COMPONENT
+   ========================= */
+export default function PortfolioSite() {
   const [dark, setDark] = useState(true);
-  const HIRE_LINK = "https://cal.com/numaansuhaff/30min"; // change to your scheduler or keep mailto below
+  const HIRE_LINK = "https://cal.com/numaansuhaff/30min"; // update to your scheduler if needed
 
   return (
     <div className={dark ? "dark" : ""}>
@@ -218,12 +235,14 @@ export default function Page() {
                 <span className="flex items-center gap-2"><Phone className="h-4 w-4" />{PROFILE.phone}</span>
               </div>
             </div>
+
             <motion.div
               className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 border border-border/70 overflow-hidden shadow-xl"
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
             >
+              {/* Drop a featured screenshot here if you want */}
               <div className="absolute inset-0 grid place-items-center">
                 <div className="text-center p-6">
                   <p className="text-sm uppercase tracking-widest text-muted-foreground">Featured</p>
@@ -251,21 +270,32 @@ export default function Page() {
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Projects</h2>
             <p className="text-muted-foreground mt-2">Selected work that I loved building.</p>
+
             <div className="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
               {PROJECTS.slice(0, 6).map((p, i) => (
                 <Card key={i} className="overflow-hidden group hover:shadow-xl transition-shadow">
                   <div className="aspect-video relative overflow-hidden">
-                    <img src={p.image} alt={p.title} className="object-cover w-full h-full group-hover:scale-[1.02] transition-transform duration-300" />
+                    <Image
+                      src={p.image}
+                      alt={p.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                      className="object-cover w-full h-full group-hover:scale-[1.02] transition-transform duration-300"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
                   </div>
+
                   <CardHeader>
                     <CardTitle>{p.title}</CardTitle>
                     <CardDescription>{p.description}</CardDescription>
                   </CardHeader>
+
                   <CardContent>
                     <div className="flex flex-wrap gap-2">
                       {p.tags.map((t) => (
-                        <Badge key={t} variant="secondary">{t}</Badge>
+                        <Badge key={t} variant="secondary">
+                          {t}
+                        </Badge>
                       ))}
                     </div>
                     <div className="mt-4 flex gap-2">
@@ -284,6 +314,7 @@ export default function Page() {
                 </Card>
               ))}
             </div>
+
             <div className="mt-6">
               <Button variant="secondary" asChild>
                 <a href="#contact">Need something like this built?</a>
@@ -297,12 +328,15 @@ export default function Page() {
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Services</h2>
             <p className="text-muted-foreground mt-2">Ways I can help your team move faster.</p>
+
             <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {SERVICES.map(({ title, blurb, icon: Icon }) => (
                 <Card key={title} className="hover:shadow-lg transition-shadow">
                   <CardContent className="p-5">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 rounded-xl bg-muted border"><Icon className="h-5 w-5" /></div>
+                      <div className="p-2 rounded-xl bg-muted border">
+                        <Icon className="h-5 w-5" />
+                      </div>
                       <span className="font-medium">{title}</span>
                     </div>
                     <p className="text-sm text-muted-foreground">{blurb}</p>
@@ -318,6 +352,7 @@ export default function Page() {
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Pricing</h2>
             <p className="text-muted-foreground mt-2">Transparent starting points—custom quotes on request.</p>
+
             <div className="mt-8 grid md:grid-cols-3 gap-6">
               {PRICING.map((tier) => (
                 <Card key={tier.tier} className="relative overflow-hidden">
@@ -328,11 +363,15 @@ export default function Page() {
                     </div>
                     <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                       {tier.points.map((pt) => (
-                        <li key={pt} className="flex items-center gap-2"><Check className="h-4 w-4" /> {pt}</li>
+                        <li key={pt} className="flex items-center gap-2">
+                          <Check className="h-4 w-4" /> {pt}
+                        </li>
                       ))}
                     </ul>
                     <Button asChild className="mt-6 w-full">
-                      <a href={HIRE_LINK} target="_blank" rel="noreferrer">Start with {tier.tier}</a>
+                      <a href={HIRE_LINK} target="_blank" rel="noreferrer">
+                        Start with {tier.tier}
+                      </a>
                     </Button>
                   </CardContent>
                 </Card>
@@ -345,11 +384,12 @@ export default function Page() {
         <section id="about" className="container mx-auto px-4 py-16">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">About</h2>
+
             <div className="mt-4 grid md:grid-cols-3 gap-6">
               <Card className="md:col-span-2">
                 <CardContent className="p-6 leading-relaxed text-muted-foreground">
                   <p>
-                    I'm a developer focused on crafting polished user experiences and reliable systems. I care about performance,
+                    I’m a developer focused on crafting polished user experiences and reliable systems. I care about performance,
                     maintainability, and thoughtful design.
                   </p>
                   <p className="mt-3">
@@ -358,14 +398,21 @@ export default function Page() {
                   </p>
                 </CardContent>
               </Card>
+
               <Card>
                 <CardHeader>
                   <CardTitle>Details</CardTitle>
                 </CardHeader>
                 <CardContent className="text-sm text-muted-foreground space-y-2">
-                  <div className="flex items-center gap-2"><MapPin className="h-4 w-4" /> {PROFILE.location}</div>
-                  <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> {PROFILE.email}</div>
-                  <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> {PROFILE.phone}</div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" /> {PROFILE.location}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4" /> {PROFILE.email}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4" /> {PROFILE.phone}
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -376,6 +423,7 @@ export default function Page() {
         <section className="container mx-auto px-4 py-16">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">What people say</h2>
+
             <div className="mt-8 grid md:grid-cols-2 gap-6">
               {TESTIMONIALS.map((t, i) => (
                 <Card key={i} className="relative overflow-hidden">
@@ -386,7 +434,9 @@ export default function Page() {
                       ))}
                     </div>
                     <p className="text-muted-foreground">“{t.quote}”</p>
-                    <div className="mt-4 text-sm">— <span className="font-medium">{t.name}</span>, {t.role}</div>
+                    <div className="mt-4 text-sm">
+                      — <span className="font-medium">{t.name}</span>, {t.role}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -398,7 +448,8 @@ export default function Page() {
         <section id="contact" className="container mx-auto px-4 py-16">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Contact</h2>
-            <p className="text-muted-foreground mt-2">Have a project in mind? Let's talk.</p>
+            <p className="text-muted-foreground mt-2">Have a project in mind? Let’s talk.</p>
+
             <form
               className="mt-6 grid md:grid-cols-2 gap-4"
               onSubmit={(e) => {
@@ -418,7 +469,9 @@ export default function Page() {
               <div className="flex items-center gap-3">
                 <Button type="submit" className="mt-2">Send</Button>
                 <Button variant="secondary" asChild className="mt-2">
-                  <a href={HIRE_LINK} target="_blank" rel="noreferrer"><Calendar className="h-4 w-4 mr-2" /> Book a call</a>
+                  <a href={HIRE_LINK} target="_blank" rel="noreferrer">
+                    <Calendar className="h-4 w-4 mr-2" /> Book a call
+                  </a>
                 </Button>
               </div>
             </form>
@@ -430,9 +483,15 @@ export default function Page() {
           <div className="container mx-auto px-4 py-10 text-sm text-muted-foreground flex flex-col md:flex-row items-center justify-between gap-3">
             <p>© {new Date().getFullYear()} {PROFILE.name}. All rights reserved.</p>
             <div className="flex items-center gap-4">
-              <a className="hover:text-foreground" href={PROFILE.links.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Github className="h-4 w-4" /></a>
-              <a className="hover:text-foreground" href={PROFILE.links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin className="h-4 w-4" /></a>
-              <a className="hover:text-foreground" href={`mailto:${PROFILE.email}`} aria-label="Email"><Mail className="h-4 w-4" /></a>
+              <a className="hover:text-foreground" href={PROFILE.links.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+                <Github className="h-4 w-4" />
+              </a>
+              <a className="hover:text-foreground" href={PROFILE.links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <Linkedin className="h-4 w-4" />
+              </a>
+              <a className="hover:text-foreground" href={`mailto:${PROFILE.email}`} aria-label="Email">
+                <Mail className="h-4 w-4" />
+              </a>
             </div>
           </div>
         </footer>
