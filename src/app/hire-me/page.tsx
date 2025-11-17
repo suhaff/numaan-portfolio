@@ -1,3 +1,5 @@
+"use client";
+
 export default function HireMePage() {
   return (
     <div className="min-h-screen container mx-auto px-4 py-24">

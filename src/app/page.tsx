@@ -187,7 +187,11 @@ export default function PortfolioSite() {
                 {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </Button>
               <Button asChild>
+<<<<<<< HEAD
                 <a href="/book-a-call" className="flex items-center gap-2">
+=======
+                <a href={PROFILE.links.resume} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+>>>>>>> af6c2d6f178cb8d322a10fdf8c62621b3cb73f09
                   Resume <ArrowRight className="h-4 w-4" />
                 </a>
               </Button>
@@ -469,7 +473,11 @@ export default function PortfolioSite() {
               <div className="flex items-center gap-3">
                 <Button type="submit" className="mt-2">Send</Button>
                 <Button variant="secondary" asChild className="mt-2">
+<<<<<<< HEAD
                   <a href="/book-a-call">
+=======
+                  <a href={HIRE_LINK} target="_blank" rel="noreferrer">
+>>>>>>> af6c2d6f178cb8d322a10fdf8c62621b3cb73f09
                     <Calendar className="h-4 w-4 mr-2" /> Book a call
                   </a>
                 </Button>
@@ -506,4 +514,8 @@ export default function PortfolioSite() {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> af6c2d6f178cb8d322a10fdf8c62621b3cb73f09
