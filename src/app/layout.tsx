@@ -1,7 +1,12 @@
-export const metadata = {
+// src/app/layout.tsx
+
+import "./globals.css";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
   title: "Numaan Suhaff – Portfolio",
   description:
-    "Portfolio of Numaan Suhaff, a Computer Science student specializing in AI/ML, backend development, and full-stack engineering. Explore projects, research, and real-world work.",
+    "Portfolio of Numaan Suhaff, a Computer Science student specializing in AI/ML, backend development, and full-stack engineering.",
   keywords: [
     "Numaan Suhaff",
     "portfolio",
@@ -19,14 +24,20 @@ export const metadata = {
       "Explore the portfolio of Numaan Suhaff: AI/ML, backend engineering, research, projects, and interactive builds.",
     url: "https://www.numaansuhaff.xyz",
     siteName: "Numaan Suhaff",
-    images: [
-      {
-        url: "/og-image.png", // optional if you want OG image
-        width: 1200,
-        height: 630,
-      },
-    ],
     locale: "en_US",
     type: "website",
   },
 };
+
+// ✅ REQUIRED DEFAULT EXPORT
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
