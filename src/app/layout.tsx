@@ -15,21 +15,22 @@ export const metadata: Metadata = {
     "backend developer",
     "computer science student",
     "anomaly detection",
+    "Vision Transformer",
     "ViT",
     "DNE",
   ],
   openGraph: {
     title: "Numaan Suhaff – Portfolio",
     description:
-      "Explore the portfolio of Numaan Suhaff: AI/ML, backend engineering, research, projects, and interactive builds.",
-    url: "https://www.numaansuhaff.xyz",
+      "Explore the portfolio of Numaan Suhaff: AI/ML, backend engineering, research projects, and interactive experiences.",
+    url: "https://numaansuhaff.xyz",   // ✅ FIXED URL (NO www)
     siteName: "Numaan Suhaff",
     locale: "en_US",
     type: "website",
   },
 };
 
-// ✅ REQUIRED DEFAULT EXPORT
+// ✅ REQUIRED DEFAULT EXPORT — Next.js needs this for App Router
 export default function RootLayout({
   children,
 }: {
