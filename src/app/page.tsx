@@ -1,289 +1,323 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
+import React, { useEffect } from "react";
+import ThreeBackground from "../components/ThreeBackground";
 
-import {
-  Github,
-  Linkedin,
-  Mail,
-  ExternalLink,
-  ArrowRight,
-  Moon,
-  Sun,
-  Code2,
-  Cpu,
-  Palette,
-  Rocket,
-  MapPin,
-  Phone,
-  Calendar,
-  Sparkles,
-  Shield,
-  Check,
-  Star,
-} from "lucide-react";
+const HomePage: React.FC = () => {
+  // Scroll reveal logic
+  useEffect(() => {
+    const elements = document.querySelectorAll<HTMLElement>(".reveal");
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+      }
+    );
 
-/* =========================
-   PROFILE / CONTENT CONFIG
-   ========================= */
-const PROFILE = {
-  name: "Numaan Suhaff",
-  role: "CS Student • Software & Game Developer",
-  summary:
-    "Third-year Computer Science student with a strong foundation in AI/ML and full-stack development. I build research-driven systems and end-to-end products—from continual anomaly detection with ViT+DNE to real-time sentiment APIs and a 2D tactical game.",
-  location: "Gelugor, Penang, Malaysia",
-  email: "numaanhussain121@gmail.com",
-  phone: "+60 173764132",
-  links: {
-    github: "https://github.com/suhaff",
-    linkedin: "https://www.linkedin.com/in/numaansuhaff",
-    resume: "/Numaan_Suhaff_Resume.docx",
-  },
-};
+    elements.forEach((el) => observer.observe(el));
 
-const SERVICES = [
-  { title: "Web App Development", blurb: "React/Next.js, Node, databases, auth, payments.", icon: Rocket },
-  { title: "AI Features & Integrations", blurb: "LLMs, NLP, vision, embeddings, model serving.", icon: Cpu },
-  { title: "Game & Interactive", blurb: "Unity prototypes, 2D shooters, game systems.", icon: Code2 },
-  { title: "Automation & APIs", blurb: "Data pipelines, scraping, REST/GraphQL APIs.", icon: Palette },
-];
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
 
-const PRICING = [
-  { tier: "Starter", price: "$499+", points: ["Landing page", "1 round of revisions", "Deployed on Vercel"] },
-  { tier: "Pro", price: "$1,499+", points: ["Multi-page site", "Contact backend + analytics", "SEO + performance"] },
-  { tier: "Custom", price: "Lets talk", points: ["Full-stack app", "AI features", "Ongoing support"] },
-];
+  // ✅ FIXED: Real working form submit handler
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
-const TESTIMONIALS = [
-  { name: "Happy Client", role: "Founder", quote: "Numaan delivered fast and nailed the requirements. The performance and polish were next-level." },
-  { name: "Research Lead", role: "AI Lab", quote: "Great at translating research ideas into working code with solid experiments and tracking." },
-];
+    const formData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      message: e.target.message.value,
+    };
 
-const PROJECTS = [
-  {
-    title: "Continual Anomaly Detection (ViT + DNE) on MVTec",
-    description:
-      "Research framework for industrial anomaly detection using ViT backbone with Deep Nearest Embedding, accuracy matrix logging, and task-incremental learning.",
-    tags: ["PyTorch", "Vision Transformers", "Continual Learning", "MVTec"],
-    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981d?q=80&w=1200&auto=format&fit=crop",
-    repo: "https://github.com/suhaff",
-    demo: "https://suhaffinity.com",
-  },
-  {
-    title: "Arena – 2D Tactical Shooter",
-    description:
-      "Unity/C# game inspired by Mini Militia with shooting mechanics, tactical movement, and multiplayer systems.",
-    tags: ["Unity", "C#", "Multiplayer", "Game Dev"],
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop",
-    repo: "https://github.com/suhaff",
-    demo: "https://suhaffinity.com",
-  },
-  {
-    title: "AI-Powered Personal Productivity Assistant",
-    description:
-      "Cross-platform assistant integrating calendar, tasks, and email with ML for scheduling and prioritization (React/Flutter, cloud microservices).",
-    tags: ["React", "Flutter", "NLP", "Microservices"],
-    image: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop",
-    repo: "https://github.com/suhaff",
-    demo: "https://suhaffinity.com",
-  },
-  {
-    title: "Real-Time Sentiment Analysis API",
-    description:
-      "API for live sentiment analysis on Reddit with fallbacks to IMDb/Amazon reviews.",
-    tags: ["APIs", "NLP", "Realtime"],
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
-    repo: "https://github.com/suhaff",
-    demo: "https://suhaffinity.com",
-  },
-  {
-    title: "Job Board with AI Resume Matching",
-    description:
-      "Matching resumes to jobs using AI; React/Next.js frontend with Node/Django backend.",
-    tags: ["Next.js", "Django", "AI"],
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop",
-    repo: "https://github.com/suhaff",
-    demo: "https://suhaffinity.com",
-  },
-  {
-    title: "Realtime Chat & Collaboration App",
-    description:
-      "Slack/Discord-style app with live chat, file sharing, and teams.",
-    tags: ["Socket.io", "Node.js", "React"],
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop",
-    repo: "https://github.com/suhaff",
-    demo: "https://suhaffinity.com",
-  },
-];
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-/* ================
-   ANIMATION PRESET
-   ================ */
-const sectionFade = {
-  hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
+    const data = await res.json();
 
-/* =========================
-   PAGE COMPONENT
-   ========================= */
-export default function PortfolioSite() {
-  const [dark, setDark] = useState(true);
-  const HIRE_LINK = "https://cal.com/numaansuhaff/30min";
+    if (data.success) {
+      alert("Message sent successfully!");
+      e.target.reset();
+    } else {
+      alert("Failed to send message. Please try again.");
+    }
+  };
+
+  const currentYear = new Date().getFullYear();
 
   return (
-    <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen text-foreground bg-[#0b0b10] relative overflow-hidden">
+    <>
+      <ThreeBackground />
 
-        {/* Sticky Hire Me CTA */}
-        <a href={HIRE_LINK} target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 z-50">
-          <Button size="lg" className="rounded-full shadow-xl">
-            <Sparkles className="h-4 w-4 mr-2" /> Hire Me
-          </Button>
-        </a>
+      {/* NAVBAR */}
+      <nav className="navbar">
+        <div className="navbar-brand">NUMAAN SUHAFF</div>
+        <div className="navbar-links">
+          <a href="#hero" className="nav-link">Home</a>
+          <a href="#about" className="nav-link">About</a>
+          <a href="#skills" className="nav-link">Skills</a>
+          <a href="#projects" className="nav-link">Projects</a>
+          <a href="#contact" className="nav-link">Contact</a>
+        </div>
+      </nav>
 
-        {/* Navbar */}
-        <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-background/50 border-b border-border/60">
-          <nav className="container mx-auto flex items-center justify-between py-3 px-4">
-            <a href="#home" className="font-semibold tracking-tight">
-              {PROFILE.name}
-            </a>
+      {/* HERO */}
+      <section className="page" id="hero">
+        <div className="hero-copy reveal">
+          <div className="hero-intro-eyebrow">PORTFOLIO · {currentYear}</div>
+          <h1 className="hero-title">
+            I build <span className="accent">thoughtful, technical</span>{" "}
+            experiences
+            <br />
+            across AI, backend, and the web.
+          </h1>
+          <p className="hero-subtitle">
+            I&apos;m Numaan Suhaff — a computer science student and aspiring
+            software engineer. I enjoy turning messy ideas into clear, working
+            systems: from anomaly detection with ViT + DNE to resume scanners
+            and interactive tools.
+          </p>
 
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" aria-label="Toggle theme" onClick={() => setDark((d) => !d)}>
-                {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </Button>
+          <div className="hero-actions">
+            <a href="#projects" className="btn btn-primary">View my projects</a>
+            <a href="#contact" className="btn btn-ghost">Let&apos;s work together</a>
+          </div>
 
-              {/* ONLY THIS BUTTON WAS FIXED */}
-              <Button asChild>
-                <a href={PROFILE.links.resume} target="_blank" rel="noreferrer" className="flex items-center gap-2">
-                  Resume <ArrowRight className="h-4 w-4" />
-                </a>
-              </Button>
-            </div>
-          </nav>
-        </header>
+          <div className="hero-tagline">
+            Currently exploring: continual learning · real-time APIs · clean,
+            artful interfaces.
+          </div>
+        </div>
 
-        {/* ALL OTHER CODE BELOW IS UNCHANGED */}
-        {/* Hero */}
-        <section id="home" className="container mx-auto px-4">
-          <motion.div
-            className="grid md:grid-cols-2 gap-10 items-center py-20"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={sectionFade}
-          >
-            <div>
-              <Badge className="mb-3">Available for freelance</Badge>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
-                {PROFILE.role}
-              </h1>
-              <p className="mt-4 text-muted-foreground max-w-prose">{PROFILE.summary}</p>
+        {/* 3D ORBIT */}
+        <div className="hero-orbit reveal">
+          <div className="hero-orbit-ring"></div>
 
-              {/* BUTTON FIX */}
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <Button asChild>
-                  <a href="/book-a-call" className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" /> Book a call
-                  </a>
-                </Button>
+          <div className="hero-pill" style={{ top: "8%", left: "8%", transform: "translateZ(40px) rotateY(-10deg)" }}>
+            <strong>AI / ML</strong> · <span>ViT · DNE · Anomaly Detection</span>
+          </div>
 
-                <Button variant="secondary" asChild>
-                  <a href={`mailto:${PROFILE.email}`} className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" /> Email me
-                  </a>
-                </Button>
-              </div>
+          <div className="hero-pill" style={{ top: "22%", right: "4%", transform: "translateZ(20px) rotateY(14deg)" }}>
+            <strong>Backend</strong> · <span>Python · APIs · Fast work</span>
+          </div>
 
-              <div className="mt-6 flex items-center gap-4 text-muted-foreground">
-                <a href={PROFILE.links.github} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-foreground">
-                  <Github className="h-4 w-4" /> GitHub
-                </a>
-                <a href={PROFILE.links.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-foreground">
-                  <Linkedin className="h-4 w-4" /> LinkedIn
-                </a>
-              </div>
+          <div className="hero-pill" style={{ bottom: "18%", left: "12%", transform: "translateZ(30px) rotateY(-6deg)" }}>
+            <strong>Student</strong> · <span>CS · Malaysia</span>
+          </div>
 
-              <div className="mt-6 flex items-center gap-4 text-sm text-muted-foreground">
-                <span className="flex items-center gap-2"><MapPin className="h-4 w-4" />{PROFILE.location}</span>
-                <span className="flex items-center gap-2"><Phone className="h-4 w-4" />{PROFILE.phone}</span>
-              </div>
-            </div>
-
-            <motion.div
-              className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 border border-border/70 overflow-hidden shadow-xl"
-            >
-              <div className="absolute inset-0 grid place-items-center">
-                <div className="text-center p-6">
-                  <p className="text-sm uppercase tracking-widest text-muted-foreground">Featured</p>
-                  <h3 className="text-2xl font-semibold mt-1">Signature Project</h3>
-                  <p className="mt-2 text-muted-foreground">Swap this card for your best screenshot or a 3D canvas.</p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Marquee */}
-          <div className="overflow-hidden border-y border-border/60">
-            <div className="flex gap-10 py-4 animate-[marquee_22s_linear_infinite] whitespace-nowrap text-muted-foreground">
-              {["React", "Next.js", "TypeScript", "Python", "PyTorch", "Unity", "Node.js", "PostgreSQL", "MongoDB", "Tailwind", "GCP"].map((t) => (
-                <span key={t} className="inline-flex items-center gap-2 text-sm">
-                  <Shield className="h-4 w-4" /> {t}
-                </span>
-              ))}
+          <div className="hero-orbit-core">
+            <div className="hero-core-title">numaansuhaff.xyz</div>
+            <div className="hero-core-caption">
+              A living, scroll-down story of what I&apos;m learning, building,
+              and shipping.
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Contact section button fix */}
-        <section id="contact" className="container mx-auto px-4 py-16">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionFade}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Contact</h2>
-            <p className="text-muted-foreground mt-2">Have a project in mind? Lets talk.</p>
+      {/* ABOUT */}
+      <section className="page" id="about">
+        <div className="section-header reveal">
+          <div className="section-kicker">About</div>
+          <h2 className="section-title">Who I am beyond the code</h2>
+          <p className="section-description">
+            I&apos;m a developer who learns by building. My work often starts
+            from curiosity — “Can I actually do this?” — and ends as something real I can deploy.
+          </p>
+        </div>
 
-            <form
-              className="mt-6 grid md:grid-cols-2 gap-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const data = new FormData(e.currentTarget);
-                const body = `Name: ${data.get("name")}\nEmail: ${data.get("email")}\nBudget: ${data.get("budget")}\nTimeline: ${data.get("timeline")}\nMessage: ${data.get("message")}`;
-                window.location.href = `mailto:${PROFILE.email}?subject=Project%20Inquiry&body=${encodeURIComponent(body)}`;
-              }}
-            >
-              <Input name="name" placeholder="Your name" required />
-              <Input name="email" type="email" placeholder="Your email" required />
-              <Input name="budget" placeholder="Budget (e.g. $1,500)" />
-              <Input name="timeline" placeholder="Timeline (e.g. 2 to 4 weeks)" />
+        <div className="content">
+          <div className="card-3d reveal about-text">
+            <p>
+              I am currently studying Computer Science and actively exploring
+              fields like anomaly detection, real-time APIs, and interactive web
+              experiences.
+            </p>
+            <p>
+              I enjoy breaking big problems into smaller, buildable steps and
+              documenting the journey — from debugging to deployment.
+            </p>
+            <p>
+              My portfolio blends technical depth with smooth, minimal, and artistic UI.
+            </p>
 
-              <div className="md:col-span-2">
-                <Textarea name="message" placeholder="Tell me a bit about your project..." rows={5} required />
+            <div className="about-grid">
+              <div className="about-tag">Based in Malaysia</div>
+              <div className="about-tag">CS Student</div>
+              <div className="about-tag">AI & Backend</div>
+              <div className="about-tag">Always Learning</div>
+            </div>
+          </div>
+
+          <div className="card-3d reveal">
+            <h3 style={{ fontSize: "0.95rem", marginBottom: "8px" }}>Quick snapshot</h3>
+            <ul style={{ listStyle: "none", fontSize: "0.85rem", color: "#e5e7eb", display: "flex", flexDirection: "column", gap: "6px" }}>
+              <li>• AI, anomaly detection, real-time systems.</li>
+              <li>• ViT + DNE, MVTec dataset, research work.</li>
+              <li>• Python, JS/TS, Git, VS Code, APIs.</li>
+              <li>• Loves writing + documenting complex setups.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* SKILLS */}
+      <section className="page" id="skills">
+        <div className="section-header reveal">
+          <div className="section-kicker">Skills</div>
+          <h2 className="section-title">What I work with</h2>
+          <p className="section-description">
+            A quick overview of my tools, stack, and learning journey.
+          </p>
+        </div>
+
+        <div className="skill-cloud">
+          <div className="skill-item reveal">
+            <div className="skill-label">Programming</div>
+            <div className="skill-tags">Python, Java, JavaScript</div>
+          </div>
+
+          <div className="skill-item reveal">
+            <div className="skill-label">AI / ML</div>
+            <div className="skill-tags">PyTorch, ViT, Anomaly Detection</div>
+          </div>
+
+          <div className="skill-item reveal">
+            <div className="skill-label">Web & Backend</div>
+            <div className="skill-tags">APIs, Node/Express, JSON</div>
+          </div>
+
+          <div className="skill-item reveal">
+            <div className="skill-label">Tools</div>
+            <div className="skill-tags">GitHub, Colab, VS Code</div>
+          </div>
+
+          <div className="skill-item reveal">
+            <div className="skill-label">Soft Skills</div>
+            <div className="skill-tags">Writing, presentation, teamwork</div>
+          </div>
+
+          <div className="skill-item reveal">
+            <div className="skill-label">Currently Learning</div>
+            <div className="skill-tags">UI/UX, better backend architecture</div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROJECTS */}
+      <section className="page" id="projects">
+        <div className="section-header reveal">
+          <div className="section-kicker">Projects</div>
+          <h2 className="section-title">Things I&apos;ve built</h2>
+          <p className="section-description">
+            A mix of personal experiments, academic research, and real shipped work.
+          </p>
+        </div>
+
+        <div className="projects-grid">
+          <article className="project-card reveal">
+            <div className="project-pill">AI / Anomaly Detection</div>
+            <div className="project-title">Continual Anomaly Detection with ViT + DNE</div>
+            <p className="project-description">
+              Research project using Vision Transformers and DNE on MVTec to analyze task-wise anomaly behavior.
+            </p>
+            <div className="project-meta">PyTorch · MVTec</div>
+          </article>
+
+          <article className="project-card reveal">
+            <div className="project-pill">APIs</div>
+            <div className="project-title">Real-Time Sentiment Analysis API</div>
+            <p className="project-description">
+              A live sentiment API originally built for Reddit, with fallback sources for reliability.
+            </p>
+            <div className="project-meta">Python · NLP</div>
+          </article>
+
+          <article className="project-card reveal">
+            <div className="project-pill">Desktop App</div>
+            <div className="project-title">Smart Tasks</div>
+            <p className="project-description">
+              A JavaFX task manager with custom UI, export functions, and persistent data handling.
+            </p>
+            <div className="project-meta">JavaFX</div>
+          </article>
+
+          <article className="project-card reveal">
+            <div className="project-pill">Web</div>
+            <div className="project-title">2nd of August Website</div>
+            <p className="project-description">
+              A sentimental website with galleries, chapters, and protected pages.
+            </p>
+            <div className="project-meta">HTML · CSS</div>
+          </article>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section className="page" id="contact">
+        <div className="section-header reveal">
+          <div className="section-kicker">Contact</div>
+          <h2 className="section-title">Let&apos;s talk</h2>
+          <p className="section-description">
+            Whether it's collaboration, internship, or feedback — message me.
+          </p>
+        </div>
+
+        <div className="contact-wrapper">
+          <div className="card-3d contact-meta reveal">
+            <p>The best way to reach me is email.</p>
+
+            <div className="contact-list">
+              <div className="contact-item">Email: <span>your@email.com</span></div>
+              <div className="contact-item">GitHub: <span>github.com/suhaff</span></div>
+              <div className="contact-item">LinkedIn: <span>linkedin.com/in/yourprofile</span></div>
+            </div>
+          </div>
+
+          <div className="card-3d reveal">
+            {/* ✅ FIXED WORKING FORM */}
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div>
+                <div className="field-label">Name</div>
+                <input type="text" name="name" className="input-field" required />
               </div>
 
-              <div className="flex items-center gap-3">
-                <Button type="submit" className="mt-2">Send</Button>
-
-                {/* ONLY THIS WAS FIXED */}
-                <Button variant="secondary" asChild className="mt-2">
-                  <a href="/book-a-call">
-                    <Calendar className="h-4 w-4 mr-2" /> Book a call
-                  </a>
-                </Button>
+              <div>
+                <div className="field-label">Email</div>
+                <input type="email" name="email" className="input-field" required />
               </div>
+
+              <div>
+                <div className="field-label">Message</div>
+                <textarea name="message" className="textarea-field" required></textarea>
+              </div>
+
+              <button type="submit" className="btn btn-primary" style={{ alignSelf: "flex-start" }}>
+                Send message
+              </button>
             </form>
-          </motion.div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        {/* Rest of your footer and styles stay the same */}
-      </div>
-    </div>
+      <footer>
+        © {currentYear} Owned by Suhaffinity · all rights reserved.
+      </footer>
+    </>
   );
-}
+};
+
+export default HomePage;
