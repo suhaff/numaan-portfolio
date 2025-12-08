@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Numaan Suhaff – Portfolio Website
+A modern, 3D interactive personal portfolio built using Next.js, React, and Three.js.  
+This website is designed to be visually engaging, fully responsive, and informative, showcasing projects, skills, experience, and a functional contact system powered by a backend email API.
 
-## Getting Started
+## Overview
+This project is a complete redesign of my original portfolio, rebuilt as a dynamic, scroll-driven experience with 3D visuals and smooth animations.  
+It highlights my work in AI, backend development, anomaly detection, real-time systems, academic projects, and personal projects.
 
-First, run the development server:
+The website features:
+- A 3D animated background using Three.js
+- Smooth page transitions and scroll-triggered animations
+- Detailed About, Skills, Projects, and Contact sections
+- A working email form integrated with Gmail SMTP through a secure backend API
+- Clean UI designed to feel modern, minimal, and expressive
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+### 1. Three.js Background
+A custom-built animated 3D scene that runs behind the content, creating depth without affecting performance.
+
+### 2. Scroll Reveal Animations
+Sections animate into view using IntersectionObserver for smooth and efficient transitions.
+
+### 3. Fully Responsive Layout
+Optimized for desktop, tablet, and mobile devices.
+
+### 4. Project Showcase
+Highlights key projects such as:
+- Continual Anomaly Detection using ViT + DNE
+- Real-Time Sentiment Analysis API
+- Smart Tasks (JavaFX desktop application)
+- 2nd of August personal website project
+
+### 5. Backend Email System
+A secure contact form that sends messages directly to my Gmail inbox using:
+- Next.js API Routes
+- Nodemailer
+- Gmail App Password authentication
+- Environment variables stored in `.env.local`
+
+### 6. Clean Architecture
+- Next.js App Router
+- Component-based structure
+- Separate 3D background component
+- Isolated contact API route
+- CSS-based styling with utility classes
+
+## Tech Stack
+
+### Frontend
+- Next.js (App Router)
+- React
+- Three.js
+- CSS
+
+### Backend
+- Nodemailer
+- Next.js API Routes
+- Google App Password SMTP authentication
+
+### Tools
+- VS Code
+- Git & GitHub
+- Node.js
+
+## Installation and Setup
+
+### 1. Clone the repository
+```
+git clone https://github.com/suhaff/numaan-portfolio.git
+cd numaan-portfolio
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Create environment variables
+Create `.env.local`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+MAIL_USER=yourgmail@gmail.com
+MAIL_PASS=yourgeneratedapppassword
+```
 
-## Learn More
+### 4. Run development server
+```
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open:
+```
+http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contact Form Backend
+Located at:
+```
+src/app/api/contact/route.ts
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Handles POST requests and sends formatted emails via Gmail SMTP.
 
-## Deploy on Vercel
+## Deployment
+Recommended host: Vercel.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Add environment variables under Project Settings → Environment Variables, then deploy directly from the GitHub repository.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+```
+/src
+  /app
+    /api
+      /contact
+        route.ts
+    page.tsx
+  /components
+    ThreeBackground.tsx
+
+/public
+  favicon.ico
+```
+
+## License
+Created by Numaan Suhaff.  
+For personal learning and inspiration only.
