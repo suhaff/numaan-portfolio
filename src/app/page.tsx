@@ -296,9 +296,9 @@ const HomePage: React.FC = () => {
             <p>The best way to reach me is email.</p>
 
             <div className="contact-list">
-              <div className="contact-item">Email: <span>your@email.com</span></div>
+              <div className="contact-item">Email: <span>numaansuhaff02@email.com</span></div>
               <div className="contact-item">GitHub: <span>github.com/suhaff</span></div>
-              <div className="contact-item">LinkedIn: <span>linkedin.com/in/yourprofile</span></div>
+              <div className="contact-item">LinkedIn: <span>in/numaansuhaff</span></div>
             </div>
           </div>
 
