@@ -1,337 +1,101 @@
 "use client";
-
-import React, { useEffect } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import ThreeBackground from "../components/ThreeBackground";
 
-const HomePage: React.FC = () => {
-  // Scroll reveal logic
+const projects = [
+  { n:"01", type:"RESEARCH · COMPUTER VISION", title:"Continual Anomaly Detection", desc:"Task-incremental industrial anomaly detection using Vision Transformers and Deep Nearest Embedding on MVTec AD.", tags:"PyTorch · ViT · DNE · MVTec", href:"https://github.com/suhaff/Continual_Anomaly_Detection" },
+  { n:"02", type:"BACKEND · NLP", title:"Real-Time Sentiment API", desc:"A sentiment analysis service for live discussion data, with fallback sources for a more resilient experience.", tags:"Python · NLP · REST APIs", href:"https://github.com/suhaff" },
+  { n:"03", type:"DESKTOP · PRODUCTIVITY", title:"SmartTodo", desc:"A JavaFX task manager with categories, priorities, filters, themes, and practical import and export workflows.", tags:"Java · JavaFX · Maven", href:"https://github.com/suhaff" },
+  { n:"04", type:"GAME DEVELOPMENT · 2D", title:"Arena", desc:"A 2D tactical shooter prototype exploring responsive gameplay, player movement, and combat mechanics.", tags:"Unity · C# · Game Design", href:"https://github.com/suhaff" },
+];
+const skills = [
+  ["LANGUAGES","Python","Java","C / C++","JavaScript","TypeScript","SQL"],
+  ["WEB & BACKEND","React","Next.js","Node.js","FastAPI","PostgreSQL","MongoDB"],
+  ["AI & DATA","PyTorch","Computer Vision","NLP","OpenCV","Pandas"],
+  ["TOOLS","Git","Docker","GCP","Unity","VS Code"],
+];
+
+export default function HomePage() {
+  const [menu,setMenu] = useState(false);
+  const [status,setStatus] = useState<"idle"|"sending"|"sent"|"error">("idle");
   useEffect(() => {
-    const elements = document.querySelectorAll<HTMLElement>(".reveal");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    elements.forEach((el) => observer.observe(el));
-
-    return () => {
-      elements.forEach((el) => observer.unobserve(el));
-    };
-  }, []);
-
-  // FIXED: Typed form handler + ESLint compliance
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-
-    const formData = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
-    };
-
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      alert("Message sent successfully!");
-      form.reset();
-    } else {
-      alert("Failed to send message. Please try again.");
-    }
-  };
-
-  const currentYear = new Date().getFullYear();
-
-  return (
-    <>
-      <ThreeBackground />
-
-      {/* NAVBAR */}
-      <nav className="navbar">
-        <div className="navbar-brand">NUMAAN SUHAFF</div>
-        <div className="navbar-links">
-          <a href="#hero" className="nav-link">Home</a>
-          <a href="#about" className="nav-link">About</a>
-          <a href="#skills" className="nav-link">Skills</a>
-          <a href="#projects" className="nav-link">Projects</a>
-          <a href="#contact" className="nav-link">Contact</a>
-        </div>
-      </nav>
-
-      {/* HERO */}
-      <section className="page" id="hero">
+    const els = document.querySelectorAll<HTMLElement>(".reveal");
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add("visible"); io.unobserve(e.target); }
+    }),{threshold:.12});
+    els.forEach(el=>io.observe(el));
+    return ()=>io.disconnect();
+  },[]);
+  async function submit(e:FormEvent<HTMLFormElement>){
+    e.preventDefault(); setStatus("sending");
+    const form=e.currentTarget, data=new FormData(form);
+    try {
+      const res=await fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:data.get("name"),email:data.get("email"),message:data.get("message")})});
+      const json=await res.json(); if(!res.ok||!json.success) throw new Error();
+      form.reset(); setStatus("sent");
+    } catch { setStatus("error"); }
+  }
+  return <>
+    <ThreeBackground/>
+    <header className="header">
+      <a className="brand" href="#home"><span className="brand-mark">N</span> NUMAAN <b>SUHAFF</b></a>
+      <button className="menu" aria-label="Toggle navigation" aria-expanded={menu} onClick={()=>setMenu(!menu)}><i/><i/></button>
+      <nav className={menu?"nav open":"nav"}>{["About","Work","Skills","Contact"].map(x=><a key={x} href={"#"+x.toLowerCase()} onClick={()=>setMenu(false)}>{x}</a>)}<a className="nav-github" href="https://github.com/suhaff" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
+    </header>
+    <main>
+      <section className="hero shell" id="home">
         <div className="hero-copy reveal">
-          <div className="hero-intro-eyebrow">PORTFOLIO · {currentYear}</div>
-
-          <h1 className="hero-title">
-            I build <span className="accent">thoughtful, technical</span> experiences
-            <br />
-            across AI, backend, and the web.
-          </h1>
-
-          <p className="hero-subtitle">
-            I&apos;m Numaan Suhaff — a computer science student and aspiring software engineer.
-            I enjoy turning messy ideas into clear, working systems: from anomaly detection with
-            ViT + DNE to resume scanners and interactive tools.
-          </p>
-
-          <div className="hero-actions">
-            <a href="#projects" className="btn btn-primary">View my projects</a>
-            <a href="#contact" className="btn btn-ghost">Let&apos;s work together</a>
-          </div>
-
-          <div className="hero-tagline">
-            Currently exploring: continual learning · real-time APIs · clean, artful interfaces.
-          </div>
+          <p className="eyebrow"><span className="pulse"/> SOFTWARE ENGINEERING · MALAYSIA</p>
+          <h1>Curious by nature.<br/><em>Builder</em> by choice.</h1>
+          <p className="lead">I’m Numaan Suhaff — a software engineering student who enjoys turning complex ideas into useful, thoughtful digital experiences.</p>
+          <div className="actions"><a className="button" href="#work">Explore my work <span>↗</span></a><a className="quiet-link" href="#contact">Let’s talk ↗</a></div>
+          <p className="availability">BASED IN MALAYSIA <i/> OPEN TO OPPORTUNITIES</p>
         </div>
-
-        {/* ORBIT UI */}
-        <div className="hero-orbit reveal">
-          <div className="hero-orbit-ring"></div>
-
-          <div className="hero-pill"
-            style={{ top: "8%", left: "8%", transform: "translateZ(40px) rotateY(-10deg)" }}>
-            <strong>AI / ML</strong> · <span>ViT · DNE · Anomaly Detection</span>
-          </div>
-
-          <div className="hero-pill"
-            style={{ top: "22%", right: "4%", transform: "translateZ(20px) rotateY(14deg)" }}>
-            <strong>Backend</strong> · <span>Python · APIs · Fast work</span>
-          </div>
-
-          <div className="hero-pill"
-            style={{ bottom: "18%", left: "12%", transform: "translateZ(30px) rotateY(-6deg)" }}>
-            <strong>Student</strong> · <span>CS · Malaysia</span>
-          </div>
-
-          <div className="hero-orbit-core">
-            <div className="hero-core-title">numaansuhaff.xyz</div>
-            <div className="hero-core-caption">
-              A living, scroll-down story of what I&apos;m learning, building, and shipping.
-            </div>
+        <div className="hero-visual reveal" aria-label="Abstract orbital monogram illustration">
+          <div className="ring ring-a"/><div className="ring ring-b"/><div className="ring ring-c"/>
+          <div className="orb"><strong>NS</strong><small>BUILD · LEARN · REPEAT</small></div>
+          <span className="orbit-tag tag-a">AI & MACHINE LEARNING</span><span className="orbit-tag tag-b">FULL-STACK DEVELOPMENT</span><span className="spark">✳</span>
+        </div>
+        <a className="scroll" href="#about">— SCROLL TO EXPLORE</a>
+      </section>
+      <section className="section shell" id="about">
+        <div className="index"><span>01 / ABOUT</span><i/></div>
+        <div className="about-grid">
+          <h2 className="reveal">I like making<br/>the <em>complicated</em><br/>feel simple.</h2>
+          <div className="about-copy reveal">
+            <p>I’m pursuing a Bachelor of Computer Science in Software Engineering at Universiti Sains Malaysia. I’m drawn to the space where engineering, research, and design meet.</p>
+            <p>From experimenting with continual anomaly detection to building full-stack applications, I learn best by getting hands-on, asking better questions, and shipping things that work.</p>
+            <div className="detail"><span>EDUCATION</span><b>Universiti Sains Malaysia · 2024—2027</b></div>
+            <div className="detail"><span>FOCUS</span><b>AI / ML · Backend · Product Engineering</b></div>
           </div>
         </div>
       </section>
-
-      {/* ABOUT */}
-      <section className="page" id="about">
-        <div className="section-header reveal">
-          <div className="section-kicker">About</div>
-          <h2 className="section-title">Who I am beyond the code</h2>
-
-          <p className="section-description">
-            I&apos;m a developer who learns by building. My work often starts from curiosity —
-            &quot;Can I actually do this?&quot; — and ends as something real I can deploy.
-          </p>
-        </div>
-
-        <div className="content">
-          <div className="card-3d reveal about-text">
-            <p>
-              I am currently studying Computer Science and actively exploring fields like anomaly
-              detection, real-time APIs, and interactive web experiences.
-            </p>
-            <p>
-              I enjoy breaking big problems into smaller, buildable steps and documenting the journey
-              along the way.
-            </p>
-            <p>
-              My portfolio blends technical depth with smooth, minimal, and artistic UI.
-            </p>
-
-            <div className="about-grid">
-              <div className="about-tag">Based in Malaysia</div>
-              <div className="about-tag">CS Student</div>
-              <div className="about-tag">AI &amp; Backend</div>
-              <div className="about-tag">Always Learning</div>
-            </div>
-          </div>
-
-          <div className="card-3d reveal">
-            <h3 style={{ fontSize: "0.95rem" }}>Quick snapshot</h3>
-
-            <ul
-              style={{
-                listStyle: "none",
-                fontSize: "0.85rem",
-                color: "#e5e7eb",
-                display: "flex",
-                flexDirection: "column",
-                gap: "6px",
-              }}
-            >
-              <li>• AI, anomaly detection, real-time systems.</li>
-              <li>• ViT + DNE, MVTec dataset, research work.</li>
-              <li>• Python, JS/TS, Git, VS Code, APIs.</li>
-              <li>• Loves writing and documenting complex setups.</li>
-            </ul>
-          </div>
+      <section className="section shell" id="work">
+        <div className="index"><span>02 / SELECTED WORK</span><i/></div>
+        <div className="section-heading reveal"><h2>Things I’ve <em>made.</em></h2><p>Research, experiments, and products<br/>that reflect what I’m curious about.</p></div>
+        <div className="projects">{projects.map(p=><a className="project reveal" key={p.n} href={p.href} target="_blank" rel="noreferrer"><span className="project-no">{p.n}</span><div><small>{p.type}</small><h3>{p.title}</h3><p>{p.desc}</p><label>{p.tags}</label></div><b className="arrow">↗</b></a>)}</div>
+        <a className="more" href="https://github.com/suhaff" target="_blank" rel="noreferrer">MORE ON GITHUB ↗</a>
+      </section>
+      <section className="section shell skills-section" id="skills">
+        <div className="index"><span>03 / TOOLKIT</span><i/></div>
+        <div className="section-heading reveal"><h2>Tools of the <em>trade.</em></h2><p>A growing toolkit for solving<br/>problems across the stack.</p></div>
+        <div className="skills">{skills.map(([group,...items])=><div className="skill reveal" key={group}><small>{group}</small><div>{items.map(item=><b key={item}>{item}</b>)}</div></div>)}</div>
+      </section>
+      <section className="section shell contact-section" id="contact">
+        <div className="index"><span>04 / GET IN TOUCH</span><i/></div>
+        <div className="contact-grid">
+          <div className="reveal"><p className="eyebrow">HAVE A PROJECT IN MIND?</p><h2>Let’s make<br/><em>something</em><br/>meaningful.</h2><p className="contact-note">Open to conversations about internships, collaborations, interesting problems, and good ideas.</p><a className="email" href="mailto:numaansuhaff02@email.com">numaansuhaff02@email.com ↗</a><div className="social"><a href="https://github.com/suhaff" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LINKEDIN ↗</a></div></div>
+          <form className="form reveal" onSubmit={submit}>
+            <label>Your name<input name="name" placeholder="How should I call you?" required maxLength={100}/></label>
+            <label>Email address<input name="email" type="email" placeholder="you@example.com" required maxLength={254}/></label>
+            <label>Your message<textarea name="message" rows={5} placeholder="Tell me a little about it..." required maxLength={5000}/></label>
+            <button className="button" disabled={status==="sending"}>{status==="sending"?"Sending…":"Send message ↗"}</button>
+            {status==="sent"&&<p className="feedback good" role="status">Thanks — your message has been sent.</p>}
+            {status==="error"&&<p className="feedback" role="alert">Couldn’t send your message. Please email me directly.</p>}
+          </form>
         </div>
       </section>
-
-      {/* SKILLS */}
-      <section className="page" id="skills">
-        <div className="section-header reveal">
-          <div className="section-kicker">Skills</div>
-          <h2 className="section-title">What I work with</h2>
-
-          <p className="section-description">
-            A quick overview of my tools, stack, and learning journey.
-          </p>
-        </div>
-
-        <div className="skill-cloud">
-          <div className="skill-item reveal">
-            <div className="skill-label">Programming</div>
-            <div className="skill-tags">Python, Java, JavaScript</div>
-          </div>
-
-          <div className="skill-item reveal">
-            <div className="skill-label">AI / ML</div>
-            <div className="skill-tags">PyTorch, ViT, Anomaly Detection</div>
-          </div>
-
-          <div className="skill-item reveal">
-            <div className="skill-label">Web &amp; Backend</div>
-            <div className="skill-tags">APIs, Node/Express, JSON</div>
-          </div>
-
-          <div className="skill-item reveal">
-            <div className="skill-label">Tools</div>
-            <div className="skill-tags">GitHub, Colab, VS Code</div>
-          </div>
-
-          <div className="skill-item reveal">
-            <div className="skill-label">Soft Skills</div>
-            <div className="skill-tags">Writing, presentation, teamwork</div>
-          </div>
-
-          <div className="skill-item reveal">
-            <div className="skill-label">Currently Learning</div>
-            <div className="skill-tags">UI/UX, better backend architecture</div>
-          </div>
-        </div>
-      </section>
-
-      {/* PROJECTS */}
-      <section className="page" id="projects">
-        <div className="section-header reveal">
-          <div className="section-kicker">Projects</div>
-          <h2 className="section-title">Things I&apos;ve built</h2>
-
-          <p className="section-description">
-            A mix of personal experiments, academic research, and real shipped work.
-          </p>
-        </div>
-
-        <div className="projects-grid">
-          <article className="project-card reveal">
-            <div className="project-pill">AI / Anomaly Detection</div>
-            <div className="project-title">Continual Anomaly Detection with ViT + DNE</div>
-            <p className="project-description">
-              Research project using Vision Transformers and DNE on MVTec to analyze
-              task-wise anomaly behavior.
-            </p>
-            <div className="project-meta">PyTorch · MVTec</div>
-          </article>
-
-          <article className="project-card reveal">
-            <div className="project-pill">APIs</div>
-            <div className="project-title">Real-Time Sentiment Analysis API</div>
-            <p className="project-description">
-              A live sentiment API originally built for Reddit, with fallback sources
-              for reliability.
-            </p>
-            <div className="project-meta">Python · NLP</div>
-          </article>
-
-          <article className="project-card reveal">
-            <div className="project-pill">Desktop App</div>
-            <div className="project-title">Smart Tasks</div>
-            <p className="project-description">
-              A JavaFX task manager with custom UI, export functions, and persistent
-              data handling.
-            </p>
-            <div className="project-meta">JavaFX</div>
-          </article>
-
-          <article className="project-card reveal">
-            <div className="project-pill">Web</div>
-            <div className="project-title">2nd of August Website</div>
-            <p className="project-description">
-              A sentimental website with galleries, chapters, and protected pages.
-            </p>
-            <div className="project-meta">HTML · CSS</div>
-          </article>
-        </div>
-      </section>
-
-      {/* CONTACT */}
-      <section className="page" id="contact">
-        <div className="section-header reveal">
-          <div className="section-kicker">Contact</div>
-          <h2 className="section-title">Let&apos;s talk</h2>
-
-          <p className="section-description">
-            Whether it&apos;s collaboration, internship, or feedback — message me.
-          </p>
-        </div>
-
-        <div className="contact-wrapper">
-          <div className="card-3d contact-meta reveal">
-            <p>The best way to reach me is email.</p>
-
-            <div className="contact-list">
-              <div className="contact-item">Email: <span>numaansuhaff02@email.com</span></div>
-              <div className="contact-item">GitHub: <span>github.com/suhaff</span></div>
-              <div className="contact-item">LinkedIn: <span>in/numaansuhaff</span></div>
-            </div>
-          </div>
-
-          <div className="card-3d reveal">
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <div>
-                <div className="field-label">Name</div>
-                <input type="text" name="name" className="input-field" required />
-              </div>
-
-              <div>
-                <div className="field-label">Email</div>
-                <input type="email" name="email" className="input-field" required />
-              </div>
-
-              <div>
-                <div className="field-label">Message</div>
-                <textarea name="message" className="textarea-field" required></textarea>
-              </div>
-
-              <button type="submit" className="btn btn-primary" style={{ alignSelf: "flex-start" }}>
-                Send message
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        © {currentYear} Owned by Suhaffinity · all rights reserved.
-      </footer>
-    </>
-  );
-};
-
-export default HomePage;
+    </main>
+    <footer className="footer"><a className="brand" href="#home"><span className="brand-mark">N</span> NUMAAN <b>SUHAFF</b></a><span>DESIGNED WITH INTENTION · © {new Date().getFullYear()}</span><a href="#home">BACK TO TOP ↑</a></footer>
+  </>;
+}
